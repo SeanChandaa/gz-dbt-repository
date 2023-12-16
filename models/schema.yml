@@ -3,11 +3,49 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
+    description: raw data source
     tables:
-
       - name: sales
         identifier: raw_gz_sales
+        description: recoords of sale
+        columns:
+          - name: date_date
+            description: the date of the prchase
+          - name: orders_id
+            description: forein key to hip
+          - name: revenue
+            description: amounts paid by cusstomer
+          - name: quantity
+            description: quantity purchased
+            tests:
+              column_name: "(orders_id ||'-'|| pdt_id)"
+
       - name: product
         identifier: raw_gz_product
+        description: diferent prducts
+        columns:
+          - name: products_id
+            description: primary key of the table
+            tests:
+              - unique:
+              - not_null:
+
+          - name: purchase_price
+            description: purchase price of the product
+
       - name: ship
         identifier: raw_gz_ship
+        description: log dates
+        columns:
+          - name: orders_id
+            description: primary key of the table
+            tests:
+              - unique:
+              - not_null:
+
+          - name: shipping_fee
+            description: price paid for shipping
+          - name: log_cost
+            description: cost of preparring parcel
+          - name: ship_cost
+            description: shipping cost paid by company
